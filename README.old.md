@@ -1,2 +1,0 @@
-# star-db
-Star DB
