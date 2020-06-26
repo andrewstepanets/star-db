@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import ItemDetails from '../item-details';
 import Row from '../row';
 import ErrorIndicator from '../error-indicator';
 import ErrorBoundry from '../error-boundry';
@@ -41,7 +41,7 @@ export default class PeoplePage extends Component {
 
         const personDetails = (
             <ErrorBoundry>
-                <PersonDetails personId={this.state.selectedPerson} />
+                <ItemDetails personId={this.state.selectedPerson} />
             </ErrorBoundry>
         );
 

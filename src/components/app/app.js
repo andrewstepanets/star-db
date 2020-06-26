@@ -5,10 +5,14 @@ import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
 import ErrorIndicator from '../error-indicator';
 import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+import ItemDetails from '../item-details';
+import Row from '../row';
+
+
+import SwapiService from '../../services/swapi-service';
+import ErrorBoundry from '../error-boundry';
 
 import './app.css';
-import SwapiService from '../../services/swapi-service';
 
 export default class App extends Component {
 
@@ -27,39 +31,36 @@ export default class App extends Component {
     if (this.state.hasError) {
       return <ErrorIndicator />
     }
-    return (
-      <div>
-        <Header />
-        <RandomPlanet />
 
-        <PeoplePage />
-        
-        {/* <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList
-              onItemSelected={this.onPersonSelected}
-              getData={this.swapiService.getAllPlanets} 
-              renderItem={(item) => (
-                    <span>{item.name} <button className="btn btn-primary">!</button></span>
-                )}/>
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.selectedPerson} />
-          </div>
-        </div> */}
-        {/*  StarShips */}
-        {/* <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList
-              onItemSelected={this.onPersonSelected}
-              getData={this.swapiService.getAllStarships}
-              renderItem={(item) => item.name} />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId={this.state.selectedPerson} />
-          </div>
-        </div> */}
-      </div>
+    const { getPerson, 
+            getStarship,
+            getPersonImage,
+            getStarshipImage } = this.swapiService;
+
+    const personDetails = (
+      <ItemDetails 
+        itemId={11} 
+        getData={getPerson}
+        getImageUrl={getPersonImage} />
+    );
+    const starshipDetails = (
+      <ItemDetails 
+        itemId={5} 
+        getData={getStarship}
+        getImageUrl={getStarshipImage} />
+    );
+
+    return (
+      <ErrorBoundry>
+        <div className="stardb-app">
+          <Header />
+          <RandomPlanet />
+          <Row
+            left={personDetails}
+            right={starshipDetails}/>
+        </div>
+      </ErrorBoundry>
+      
     );
   }
   
