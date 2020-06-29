@@ -4,6 +4,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import ItemDetails, { Record } from '../item-details/item-details';
+import ItemList from '../item-list';
 import Row from '../row';
 
 
@@ -63,6 +64,7 @@ export default class App extends Component {
           <Row
             left={personDetails}
             right={starshipDetails}/>
+          {/* <ItemList /> */}
         </div>
       </ErrorBoundry>
       
