@@ -63,7 +63,7 @@ export default class ItemDetails extends Component {
     return (
       <div className="item-details card">
             <img className="item-image"
-                src={image} />
+                src={image} alt={name}/>
 
             <div className="card-body">
                 <h4>{name} {this.props.itemId}</h4>

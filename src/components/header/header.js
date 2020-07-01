@@ -6,7 +6,7 @@ const Header = ( { onServiceChange } ) => {
   return (
     <div className="header d-flex">
       <h3>
-        <a href="#">
+        <a href="./index.html">
           Star DB
         </a>
       </h3>
