@@ -6,6 +6,7 @@ import ErrorIndicator from '../error-indicator';
 
 import ItemDetails, { Record } from '../item-details/item-details';
 import SwapiService from '../../services/swapi-service';
+import DummySwapiService from '../../services/dummy-swapi-service';
 
 import { SwapiServiceProvider} from '../swapi-service-context';
 
@@ -27,11 +28,25 @@ import './app.css';
 
 export default class App extends Component {
 
-  swapiService = new SwapiService();
+  
+  // swapiService = new SwapiService();
 
   state = {
     showRandomPlanet: true,
+    swapiService: new DummySwapiService(),
     hasError: false
+  };
+
+  onServiceChange  = () => {
+    this.setState(( { swapiService } ) => {
+      const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+
+      console.log('switched to', Service.name);
+
+      return {
+        swapiService: new Service()
+      };
+    });
   };
 
   componentDidCatch(){
@@ -46,7 +61,7 @@ export default class App extends Component {
     const { getPerson, 
             getStarship,
             getPersonImage,
-            getStarshipImage } = this.swapiService;
+            getStarshipImage } = this.state.swapiService;
 
     const personDetails = (
       <ItemDetails 
@@ -70,9 +85,10 @@ export default class App extends Component {
 
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
         <div className="stardb-app">
-          <Header />
+          <Header 
+            onServiceChange={this.onServiceChange}/>
           <RandomPlanet />
           {/* <Row
             left={personDetails}
