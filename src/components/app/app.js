@@ -6,6 +6,7 @@ import DummySwapiService from '../../services/dummy-swapi-service';
 import { SwapiServiceProvider} from '../swapi-service-context';
 import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
 import ErrorBoundry from '../error-boundry';
+import { StarshipDetails } from '../sw-components';
 
 // importing component React router
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -50,7 +51,13 @@ export default class App extends Component {
                       render={() => <h2>People</h2>} />
               <Route path="/people" component={PeoplePage} />
               <Route path="/planets" component={PlanetsPage} />
-              <Route path="/starships" component={StarshipsPage} />
+              <Route path="/starships" component={StarshipsPage} exact />
+              <Route path="/starships/:id"
+                      render={({ match }) => {
+                        const { id } = match.params;
+                        console.log(match);
+                        return <StarshipDetails itemId={id}/>
+                      }}/>
               
 
             </div>
